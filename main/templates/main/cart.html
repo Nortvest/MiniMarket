@@ -1,0 +1,36 @@
+{% extends 'main/base.html' %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        {% for el in products %}
+        <div class="card col-lg-4 col-md-6 col-sm-12 m-2 justify-content-between" style="width: 18rem;">
+            <a href="{{ el.get_absolute_url }}">
+                {% if el.photo %}
+                <img src="{{ el.photo.url }}" class="card-img-top mt-1" alt="Товар">
+                {% else %}
+                <img src="#" class="card-img-top mt-1" alt="Товар">
+                {% endif %}
+            </a>
+            <div class="card-body mb-5" style="max-height: 170px;">
+                <a href="{{ el.get_absolute_url }}" style="color: rgb(80, 80, 80); text-decoration: none;">
+                    <h5 class="card-title text-center" style="font-weight: bold;">{{ el.price }} руб.</h5>
+                </a>
+                <a href="{{ el.get_absolute_url }}" style="color: black; text-decoration: none;">
+                    <span style="font-size: 1.1em; font-weight: 700;">{{ el.name }}</span>
+                    <p class="card-text">{{ el.description|truncatechars:40 }}</p>
+                </a>
+            </div>
+
+            <a href="?user={{ request.user.pk }}&product={{ el.pk }}" class="btn btn-secondary position-absolute" style="bottom: 10px; right: 10px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+                    <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+                </svg>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

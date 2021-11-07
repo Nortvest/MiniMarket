@@ -1,0 +1,82 @@
+{% extends 'main/base.html' %}
+
+
+{% block content %}
+
+<!-- Категории -->
+<div class="container">
+    <div class="row pb-2 mt-5 text-center">
+        <div class="col-md col-sm-12">
+            {% if active == 0 %}
+            <span style="text-decoration: none; color: #6c757d;">
+                Все товары
+            </span>
+            {% else %}
+            <a href="{% url 'products' %}" style="text-decoration: none; color:#0dcaf0;">
+                Все товары
+            </a>
+            {% endif %}
+        </div>
+        {% for el in menu %}
+        <div class="col-md col-sm-12">
+            {% if el.pk != active %}
+            <a href="{{ el.get_absolute_url }}" style="text-decoration: none; color:#0dcaf0;">
+                {{ el.name }}
+            </a>
+            {% else %}
+            <span style="text-decoration: none; color: #6c757d;">
+                {{ el.name }}
+            </span>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<hr>
+
+{% if request.user.is_authenticated %}
+<div class="position-relative pb-2">
+    <a href="{% url 'add_product' %}" class="btn btn-primary position-absolute" style="right: 50px;">Добавить товар</a>
+</div>
+{% endif %}
+
+<!-- Товары -->
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        {% for el in products %}
+        <div class="card col-lg-4 col-md-6 col-sm-12 m-2 justify-content-between" style="width: 18rem;">
+            <a href="{{ el.get_absolute_url }}">
+                {% if el.photo %}
+                <img src="{{ el.photo.url }}" class="card-img-top mt-1" alt="Товар">
+                {% else %}
+                <img src="#" class="card-img-top mt-1" alt="Товар">
+                {% endif %}
+            </a>
+            <div class="card-body mb-5" style="max-height: 170px;">
+                <a href="{{ el.get_absolute_url }}" style="color: rgb(80, 80, 80); text-decoration: none;">
+                    <h5 class="card-title text-center" style="font-weight: bold;">{{ el.price }} руб.</h5>
+                </a>
+                <a href="{{ el.get_absolute_url }}" style="color: black; text-decoration: none;">
+                    <span style="font-size: 1.1em; font-weight: 700;">{{ el.name }}</span>
+                    <p class="card-text">{{ el.description|truncatechars:40 }}</p>
+                </a>
+            </div>
+            {% if request.user.is_authenticated %}
+                {% if el in product_in_cart %}
+                <a href="" class="btn btn-secondary position-absolute" style="bottom: 10px; left: 10px;">В корзину</a>
+                {% else %}
+                    {% if request.GET.page %}
+                    <a href="?user={{ request.user.pk }}&product={{ el.pk }}&page={{ request.GET.page }}" class="btn btn-primary position-absolute" style="bottom: 10px; left: 10px;">В корзину</a>
+                    {% else %}
+                    <a href="?user={{ request.user.pk }}&product={{ el.pk }}" class="btn btn-primary position-absolute" style="bottom: 10px; left: 10px;">В корзину</a>
+                    {% endif %}
+                {% endif %}
+            {% else %}
+            <a href="{% url 'sign_in' %}" class="btn btn-primary position-absolute" style="bottom: 10px; left: 10px;">В корзину</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

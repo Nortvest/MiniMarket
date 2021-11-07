@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+      <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+        <h1 class="display-4 fw-bold lh-1">Магазинчик любых товаров</h1>
+        <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse aspernatur optio facere voluptatum blanditiis, incidunt commodi eveniet? Consectetur ducimus ipsa omnis dolore, corrupti velit eligendi quam aperiam voluptate, sit voluptates ullam sint libero, porro aut nisi deleniti culpa. Incidunt modi aliquid nemo accusantium totam similique iusto ut reiciendis eligendi officiis.</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+        </div>
+      </div>
+      <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg img">
+          <img class="rounded-lg-3" style="max-width: 500px;" src="{% static 'main/images/market.jpg' %}" alt="">
+      </div>
+    </div>
+  </div>
+{% endblock %}
